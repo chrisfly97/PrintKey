@@ -3,13 +3,17 @@ Dieses Projekt wird vertreten Von
   Lenny Stark
 
 
-Das Projekt PrintKey soll eine permanete Lösung für beides Schüler ud Schule werden
+Das Projekt PrintKey soll eine permanete Lösung für beides Schüler und Schule werden.
 Mittels diesem Projekt soll es uns möglich sein, die Drucker via NFC-Reader und 
-NFC-Tag anzusteuern. Dadurch ist de Benutzerzeit der Drucker mehr Strukturiert.
+NFC-Tag anzusteuern. Dadurch ist die Benutzerzeit der Drucker mehr Strukturiert.
 Ebenso ist es dadurch nicht mehr möglich die Drucker dadurch zu missbrauchen und ohne NFC-TAG
 bzw. ohne NFC-TAGS mit den richtigen Berechtigungen in einer hinterlegten Datenbank zu verwenden.
 Dies soll Strom als auch Material für die Schule sparen.
 
-Aktuelle Version:
+Vorherige Version(en):
   1.0 (Testprogramm V1)
   Änderungsdatum 21.05.2025
+
+Aktuelle Version:
+   1.1 (Testprogramm V1.1)
+   Änderungsdatum 28.05.2025
