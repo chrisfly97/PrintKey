@@ -14,6 +14,9 @@ Vorherige Version(en):
   1.0 (Testprogramm V1)
   Änderungsdatum 21.05.2025
 
-Aktuelle Version:
-   1.1 (Testprogramm V1.1)
+  1.1 (Testprogramm V1.1)
    Änderungsdatum 28.05.2025
+
+Aktuelle Version:
+   1.2 (Testprogramm V1.2)
+   Änderungsdatum 06.06.2025
