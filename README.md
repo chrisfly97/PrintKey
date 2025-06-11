@@ -11,9 +11,18 @@ bzw. ohne NFC-TAGS mit den richtigen Berechtigungen in einer hinterlegten Datenb
 Dies soll Strom als auch Material für die Schule sparen.
 
 Vorherige Version(en):
-  1.0 (Testprogramm V1)
+
+
+  -1.0 (Testprogramm V1)
   Änderungsdatum 21.05.2025
 
-Aktuelle Version:
-   1.1 (Testprogramm V1.1)
+  -1.1 (Testprogramm V1.1)
    Änderungsdatum 28.05.2025
+
+   -1.2 (Testprogramm V1.2)
+   Änderungsdatum 06.06.2025
+
+
+Aktuelle Version:
+   -1.3 (Testprogramm V1.3)
+    Änderungsdatum 11.06.2025
