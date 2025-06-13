@@ -72,32 +72,39 @@ def get_drucker_state():
     if GPIO.input(YELLOW_LED_PIN) == False:
         return False
 
+try:
+    while True:   
+        Ausgangsstellung()
+        if get_drucker_state() == False:
+            GPIO.setup(YELLOW_LED_PIN, GPIO.OUT)
+            ergebnis = name_suchen(get_name())
+            if ergebnis != []:
+                name = ergebnis[0][1]
+                print(f"Du {name} darfst drucken")
+                with canvas(device) as draw:
+                    draw.rectangle(device.bounding_box, outline="white", fill="black")
+                    draw.text((5, 5), f"Hallo {name}, ", fill="white")
+                    draw.text((5, 15), f"du darfst drucken", fill="white")
+                GPIO.output(GREEN_LED_PIN, GPIO.LOW)
+                GPIO.output(YELLOW_LED_PIN, GPIO.HIGH)
+                GPIO.output(RED_LED_PIN, GPIO.HIGH) 
+                time.sleep(10)
 
-while True:   
-    Ausgangsstellung()
-    if get_drucker_state() == False:
-        GPIO.setup(YELLOW_LED_PIN, GPIO.OUT)
-        ergebnis = name_suchen(get_name())
-        if ergebnis != []:
-            name = ergebnis[0][1]
-            print(f"Du {name} darfst drucken")
-            with canvas(device) as draw:
-                draw.rectangle(device.bounding_box, outline="white", fill="black")
-                draw.text((5, 5), f"Hallo {name}, ", fill="white")
-                draw.text((5, 15), f"du darfst drucken", fill="white")
-            GPIO.output(GREEN_LED_PIN, GPIO.LOW)
-            GPIO.output(YELLOW_LED_PIN, GPIO.HIGH)
-            GPIO.output(RED_LED_PIN, GPIO.HIGH) 
-            time.sleep(10)
+            else:
+                print("Du darfst nicht drucken! Drucker ist besetzt oder du bist nicht berechtigt!")
+                with canvas(device) as draw:
+                    draw.rectangle(device.bounding_box, outline="white", fill="black")
+                    draw.text((5, 5), "Du darfst nicht drucken! /nDrucker ist besetzt oder du bist nicht berechtigt!", fill="white")
+                    draw.text((5, 15), "Drucker ist besetzt ", fill="white")
+                    draw.text((5, 25), "oder", fill="white")
+                    draw.text((5, 35), "du bist nicht berechtigt!", fill="white")
+                GPIO.output(RED_LED_PIN, GPIO.HIGH) 
+                GPIO.output(GREEN_LED_PIN, GPIO.LOW)
+                time.sleep(5)
 
-        else:
-            print("Du darfst nicht drucken! Drucker ist besetzt oder du bist nicht berechtigt!")
-            with canvas(device) as draw:
-                draw.rectangle(device.bounding_box, outline="white", fill="black")
-                draw.text((5, 5), "Du darfst nicht drucken! /nDrucker ist besetzt oder du bist nicht berechtigt!", fill="white")
-                draw.text((5, 15), "Drucker ist besetzt ", fill="white")
-                draw.text((5, 25), "oder", fill="white")
-                draw.text((5, 35), "du bist nicht berechtigt!", fill="white")
-            GPIO.output(RED_LED_PIN, GPIO.HIGH) 
-            GPIO.output(GREEN_LED_PIN, GPIO.LOW)
-            time.sleep(5)
+except KeyboardInterrupt:
+    print("Programm wurde beendet")
+    GPIO.output(GREEN_LED_PIN, GPIO.LOW)
+    GPIO.output(YELLOW_LED_PIN, GPIO.LOW)
+    GPIO.output(RED_LED_PIN, GPIO.LOW)
+    GPIO.cleanup()  # Gibt die GPIOs frei
