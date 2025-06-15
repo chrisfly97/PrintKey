@@ -23,6 +23,10 @@ Vorherige Version(en):
    Änderungsdatum 06.06.2025
 
 
-Aktuelle Version:
    -1.3 (Testprogramm V1.3)
     Änderungsdatum 11.06.2025
+
+    -1.4 (PrintKeyV1.py / user_verwalten.py)
+     Änderungsdatum 15.06.2025
+
+
