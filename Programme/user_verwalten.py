@@ -3,6 +3,8 @@ from getpass import getpass
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 
+# Muss noch Display hinzugügen 
+
 def tag_beschreiben(name):
     reader = SimpleMFRC522()
     try:

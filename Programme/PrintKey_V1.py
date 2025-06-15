@@ -11,7 +11,7 @@ serial = i2c(port=1, address=0x3C)
 device = sh1106(serial)
 
 # GPIO-Pins definieren
-GREEN_LED_PIN = 27   # Scann möglich
+GREEN_LED_PIN = 27   # Scan möglich
 YELLOW_LED_PIN = 22  # 3D-Druck läuft
 RED_LED_PIN = 17     # Kein Scan möglich
 GPIO.setmode(GPIO.BCM)
@@ -41,7 +41,7 @@ def name_suchen(suchname):
         cursor.execute("use Drucker_Berechtigte")
         
         # Suche nach exakter Übereinstimmung
-        query = f"SELECT * FROM berechtigte WHERE name = %s"
+        query = f"SELECT * FROM berechtigte WHERE name = %s" #%s Platzhalter für Suchname
         cursor.execute(query, (suchname,))  
         
         ergebnis = cursor.fetchall()   # ergebnis ist ein Tupel in einer Liste, [(ID,"Name")]
@@ -59,7 +59,7 @@ def get_name():
     try:
         print("Bitte Tag auflegen...")
         id, text = reader.read()
-        return text
+        return text  #text ist ein string
 
     except Error as e:
         print(f"Fehler: {e}")
@@ -80,7 +80,7 @@ try:
             ergebnis = name_suchen(get_name())
             if ergebnis != []:
                 name = ergebnis[0][1]
-                print(f"Du {name} darfst drucken")
+                print(f"Hallo {name}, du darfst drucken")
                 with canvas(device) as draw:
                     draw.rectangle(device.bounding_box, outline="white", fill="black")
                     draw.text((5, 5), f"Hallo {name}, ", fill="white")
