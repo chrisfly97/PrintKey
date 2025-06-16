@@ -10,8 +10,12 @@ Ebenso ist es dadurch nicht mehr möglich die Drucker dadurch zu missbrauchen un
 bzw. ohne NFC-TAGS mit den richtigen Berechtigungen in einer hinterlegten Datenbank zu verwenden.
 Dies soll Strom als auch Material für die Schule sparen.
 
-Vorherige Version(en):
+Hauptprogramme: PrintKey_V1.py und user_verwalten
 
+Tutorial zum Nachbau von PrintKay dokument Tutorial_PrintKey.docx, 
+alle Programme die in diesem Dokument genannt werden findet man in dem Ordner "Programme"
+
+Vorherige Version(en):
 
   -1.0 (Testprogramm V1)
   Änderungsdatum 21.05.2025
