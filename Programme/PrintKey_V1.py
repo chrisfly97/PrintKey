@@ -69,7 +69,7 @@ def get_drucker_state():
     GPIO.setup(YELLOW_LED_PIN, GPIO.IN)
     if GPIO.input(YELLOW_LED_PIN) == True:
         return True
-    if GPIO.input(YELLOW_LED_PIN) == False:
+    else:
         return False
 
 try:
@@ -78,13 +78,21 @@ try:
         if get_drucker_state() == False:
             GPIO.setup(YELLOW_LED_PIN, GPIO.OUT)
             ergebnis = name_suchen(get_name())
+
             if ergebnis != []:
                 name = ergebnis[0][1]
                 print(f"Hallo {name}, du darfst drucken")
+
                 with canvas(device) as draw:
                     draw.rectangle(device.bounding_box, outline="white", fill="black")
                     draw.text((5, 5), f"Hallo {name}, ", fill="white")
                     draw.text((5, 15), f"du darfst drucken", fill="white")
+                time.sleep(3)
+
+                with canvas(device) as draw:
+                    draw.rectangle(device.bounding_box, outline="white", fill="black")
+                    draw.text((5, 5), f"Drucken...", fill="white")
+                
                 GPIO.output(GREEN_LED_PIN, GPIO.LOW)
                 GPIO.output(YELLOW_LED_PIN, GPIO.HIGH)
                 GPIO.output(RED_LED_PIN, GPIO.HIGH) 
@@ -92,6 +100,7 @@ try:
 
             else:
                 print("Du darfst nicht drucken! Drucker ist besetzt oder du bist nicht berechtigt!")
+
                 with canvas(device) as draw:
                     draw.rectangle(device.bounding_box, outline="white", fill="black")
                     draw.text((5, 5), "Du darfst nicht drucken! /nDrucker ist besetzt oder du bist nicht berechtigt!", fill="white")
