@@ -16,6 +16,7 @@ GREEN_LED_PIN = 27   # Scan möglich
 YELLOW_LED_PIN = 22  # 3D-Druck läuft
 RED_LED_PIN = 17     # Kein Scan möglich
 GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 
 def Ausgangsstellung():
     GPIO.setup(GREEN_LED_PIN, GPIO.OUT)
@@ -85,8 +86,9 @@ try:
 
                 with canvas(device) as draw:
                     draw.rectangle(device.bounding_box, outline="white", fill="black")
-                    draw.text((5, 5), f"Hallo {name}, ", fill="white")
-                    draw.text((5, 15), f"du darfst drucken", fill="white")
+                    draw.text((5, 5), f"Hallo, ", fill="white")
+                    draw.text((5, 15), f"{name}", fill="white")
+                    draw.text((5, 25), f"du darfst drucken", fill="white")
                 time.sleep(3)
 
                 with canvas(device) as draw:
