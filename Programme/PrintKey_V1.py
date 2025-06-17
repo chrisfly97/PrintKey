@@ -4,6 +4,7 @@ import RPi.GPIO as GPIO
 from luma.core.interface.serial import i2c
 from luma.core.render import canvas
 from luma.oled.device import sh1106
+from luma.core.error import DeviceNotFoundError
 import time
 
 # Diplay einrichten
@@ -36,11 +37,10 @@ def name_suchen(suchname):
             user = "admin",
             password = "admin"
         )
-        #print("Database connected")
         cursor=connection.cursor()
         cursor.execute("use Drucker_Berechtigte")
         
-        # Suche nach exakter Übereinstimmung
+        # Suche nach  Übereinstimmung
         query = f"SELECT * FROM berechtigte WHERE name = %s" #%s Platzhalter für Suchname
         cursor.execute(query, (suchname,))  
         
@@ -99,14 +99,13 @@ try:
                 time.sleep(10)
 
             else:
-                print("Du darfst nicht drucken! Drucker ist besetzt oder du bist nicht berechtigt!")
+                print("Du darfst nicht drucken!du bist nicht berechtigt!")
 
                 with canvas(device) as draw:
                     draw.rectangle(device.bounding_box, outline="white", fill="black")
-                    draw.text((5, 5), "Du darfst nicht drucken! /nDrucker ist besetzt oder du bist nicht berechtigt!", fill="white")
-                    draw.text((5, 15), "Drucker ist besetzt ", fill="white")
-                    draw.text((5, 25), "oder", fill="white")
-                    draw.text((5, 35), "du bist nicht berechtigt!", fill="white")
+                    draw.text((5, 5), "Du darfst nicht drucken!", fill="white")
+                    draw.text((5, 25), "Du bist nicht berechtigt!", fill="white")
+        
                 GPIO.output(RED_LED_PIN, GPIO.HIGH) 
                 GPIO.output(GREEN_LED_PIN, GPIO.LOW)
                 time.sleep(5)
@@ -117,3 +116,25 @@ except KeyboardInterrupt:
     GPIO.output(YELLOW_LED_PIN, GPIO.LOW)
     GPIO.output(RED_LED_PIN, GPIO.LOW)
     GPIO.cleanup()  # Gibt die GPIOs frei
+
+except DeviceNotFoundError as e: 
+    print(f"Error: {e} Display nicht verbunden")
+    GPIO.output(GREEN_LED_PIN, GPIO.HIGH)
+    GPIO.output(YELLOW_LED_PIN, GPIO.HIGH)
+    GPIO.output(RED_LED_PIN, GPIO.HIGH)
+    time.sleep(3)
+    print("Programm wurde beendet")
+    GPIO.output(GREEN_LED_PIN, GPIO.LOW)
+    GPIO.output(YELLOW_LED_PIN, GPIO.LOW)
+    GPIO.output(RED_LED_PIN, GPIO.LOW)
+
+except OSError as e:  
+    print(f"I²C-Fehler: {e}. Überprüfe die Verbindung des Displays!")
+    GPIO.output(GREEN_LED_PIN, GPIO.HIGH)
+    GPIO.output(YELLOW_LED_PIN, GPIO.HIGH)
+    GPIO.output(RED_LED_PIN, GPIO.HIGH)
+    time.sleep(3)
+    print("Programm wurde beendet")
+    GPIO.output(GREEN_LED_PIN, GPIO.LOW)
+    GPIO.output(YELLOW_LED_PIN, GPIO.LOW)
+    GPIO.output(RED_LED_PIN, GPIO.LOW)

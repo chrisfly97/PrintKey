@@ -29,7 +29,6 @@ def tag_beschreiben(name):
 def tag_reset():
     reader = SimpleMFRC522()
     try:
-        print("Halten sie den alten Tag an den Reader")
         reader.write("")    
         print("Tag wurde zurückgesetzt") 
     finally:
@@ -51,7 +50,7 @@ def user_hinzufuegen(name):
     except Error as e:
         print(f"Fehler: {e}")
 
-def user_entfernen(name):
+def user_tag_entfernen(name):
     try:
         # Prüfen, ob der Name existiert
         cursor.execute("SELECT * FROM berechtigte WHERE name = %s", (name,)) #Berechtigte nach namen durchsuchen
@@ -65,13 +64,26 @@ def user_entfernen(name):
     except Error as e:
         print(f"Fehler: {e}")
 
+def user_name_entfernen(name):
+    try:
+        # Prüfen, ob der Name existiert
+        cursor.execute("SELECT * FROM berechtigte WHERE name = %s", (name,)) #Berechtigte nach namen durchsuchen
+        if cursor.fetchone(): #fetchone nimmt die erste zeile wo es vorhanden ist und gibt diese als Tupel zurück wann nicht vorhanden None
+            cursor.execute("DELETE FROM berechtigte WHERE name = %s", (name,))
+            connection.commit()
+            print(f"user {name} erfolgreich entfernt!")    
+        else:
+            print(f"Der user existiert nicht! / Tag ist leer")
+    except Error as e:
+        print(f"Fehler: {e}")
+
 
 try:
     print("Mit Datenbank verbinden:")
     connection= connect(
         host = "localhost",
-        user = input ("Enter Username"),
-        password = getpass ("Enter password")
+        user = input ("Enter Username: "),
+        password = getpass ("Enter password: ")
     )
     cursor=connection.cursor()
     cursor.execute("use Drucker_Berechtigte")
@@ -80,14 +92,17 @@ except Error as e:
     print(f"Verbindungsfehler: {e}")
 
 while True:
-    print("\nMöglichkeiten: add / remove / cancel")
+    print("\nMöglichkeiten: add / remove wt (tag) / remove wn (name) / cancel")
     admin_input = input("Was möchten Sie machen: ")
     if admin_input == "add":
         name = input("Name des neuen users: ")
         user_hinzufuegen(name)
-    elif admin_input == "remove":
+    elif admin_input == "remove wt":
         name = get_name()
-        user_entfernen(name)
+        user_tag_entfernen(name)
+    elif admin_input == "remove wn":
+        name = input("Welchen user wollen sie entfernen? ")
+        user_name_entfernen(name)
     elif admin_input == "cancel":
         print("Programm wird beendet")
         break
